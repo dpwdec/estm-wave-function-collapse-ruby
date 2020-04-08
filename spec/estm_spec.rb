@@ -1,4 +1,5 @@
 require 'estm.rb'
+require 'rspec/collection_matchers'
 
 shared_context "LCS matrix" do
   #S = 7, C = 8, L = 7
@@ -69,38 +70,38 @@ describe Estm do
       context "an LCS matrix" do
         include_context "LCS matrix"
         it "returns a Hash" do
-          expect(subject.parse_example_matrix[0]).to be_a_kind_of(Hash)
+          expect { subject.parse_example_matrix }.to change(subject, :weights).to be_a_kind_of(Hash)
         end
         
         it "returns a Set" do
-          expect(subject.parse_example_matrix[1]).to be_a_kind_of(Set)
+          expect { subject.parse_example_matrix }.to change(subject, :compatibilities).to be_a_kind_of(Set)
         end
         
         it "records 3 tile types" do
-          expect(subject.parse_example_matrix[0].length).to eq(3)
+          expect { subject.parse_example_matrix }.to change(subject, :weights).to have_exactly(3).items
         end
         
         it "records 14 'L' types" do
-          expect(subject.parse_example_matrix[0]["L"]).to eq(14)
+          expect { subject.parse_example_matrix }.to change(subject, :weights).to include("L" => 14)
         end
         
         it "returns a set of relationships" do
-          expect(subject.parse_example_matrix[1].length).to eq(22)
+          expect { subject.parse_example_matrix }.to change(subject, :compatibilities).to have_exactly(22).items
         end
       end
       
       context "an ABCD matrix" do
         include_context "ABCD matrix" do
-          it "records 4 tile types" do
-            expect(subject.parse_example_matrix[0].length).to eq(4)
+          it "records 4 different tile types" do
+            expect { subject.parse_example_matrix }.to change(subject, :weights).to have_exactly(4).items
           end
           
           it "records 4 'D' types" do
-            expect(subject.parse_example_matrix[0]["D"]).to eq(4)
+            expect { subject.parse_example_matrix }.to change(subject, :weights).to include("D" => 4)
           end
           
-          it "returns a set of 28 relationships" do
-            expect(subject.parse_example_matrix[1].length).to eq(32)
+          it "returns a set of 32 relationships" do
+            expect { subject.parse_example_matrix }.to change(subject, :compatibilities).to have_exactly(32).items
           end
         end
       end

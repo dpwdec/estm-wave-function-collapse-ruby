@@ -15,6 +15,8 @@ class Estm
   
   def initialize(input_matrix)
     @input_matrix = input_matrix
+    @compatibilities = Object.new
+    @weights = Object.new
   end
   
   # Uses the object's currently defined input matrix.
@@ -41,7 +43,8 @@ class Estm
       end
     end
     
-    return weights, compatibilities
+    @weights = weights
+    @compatibilities = compatibilities
   end
   
   # returns possible valid neighbour positions in the matrix
@@ -60,5 +63,13 @@ class Estm
     dirs << UP if y < height - 1
     
     return dirs
+  end
+  
+  def weights
+    @weights
+  end
+  
+  def compatibilities
+    @compatibilities
   end
 end
