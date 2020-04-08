@@ -27,15 +27,21 @@ class Estm
   def parse_example_matrix
     
     weights = Hash.new
+    compatibilities = Set.new
     
-    @input_matrix.each_with_index do |row, y|
-      row.each_with_index do |cur_tile, x|
+    @input_matrix.each_with_index do |row, x|
+      row.each_with_index do |cur_tile, y|
          weights[cur_tile] = 0 if !weights.key?(cur_tile)
          weights[cur_tile] += 1
+         
+         valid_dirs(x, y).each do |dir|
+           other_tile = @input_matrix[x + dir[0]][y + dir[1]]
+           compatibilities.add([cur_tile, other_tile, dir])
+         end
       end
     end
     
-    return weights, Set.new
+    return weights, compatibilities
   end
   
   # returns possible valid neighbour positions in the matrix
