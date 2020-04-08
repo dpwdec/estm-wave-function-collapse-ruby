@@ -36,18 +36,6 @@ describe Estm do
         end
       end
       
-      context "it receives a top right edge coordinate" do 
-        it "should return [[-1, 0], [0, -1]] for input (0, 6)" do
-          expect(subject.valid_dirs(0, 3)).to contain_exactly(RIGHT, DOWN)
-        end
-      end
-      
-      context "it receives a bottom left edge coordinate" do
-        it "should return [[-1, 0], [0, 1]] for input (6, 0)" do
-          expect(subject.valid_dirs(6, 0)).to contain_exactly(LEFT, UP)
-        end
-      end
-      
       context "it receives a bottom right edge coordinate" do
         it "should return [[-1, 0], [0, -1]] for input (6, 3)" do
           expect(subject.valid_dirs(6, 3)).to contain_exactly(LEFT, DOWN)
