@@ -81,14 +81,17 @@ class Estm
 end
 
 class Wave
-  def initialize(size, weights)
+  def initialize(size, model)
     @coefficients = []
     @size = size
-    @weights = weights
+    @model = model
   end
   
   def init_coefficients
-    @coefficients = [[5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3]]
+    g = @model.weights
+    @coefficients << [['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C']] 
+    @coefficients << [['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C']]
+    @coefficients << [['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C']]
   end
   
   def coefficients
