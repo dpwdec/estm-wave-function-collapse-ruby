@@ -2,7 +2,6 @@ require 'estm.rb'
 require 'rspec/collection_matchers'
 
 shared_context "LCS matrix" do
-  #S = 7, C = 8, L = 7
   matrix = [
         ['L','L','L','L'],
         ['L','L','L','L'],
@@ -16,43 +15,6 @@ shared_context "LCS matrix" do
 end
 
 shared_context "ABCD matrix" do
-  #D = 3, A = 9, C = 12, B = 8
-  #<Set: {
-  #["D", "A", [1, 0]], 
-  #["D", "D", [0, 1]], 
-  #["D", "D", [0, -1]],
-  
-  #["A", "D", [-1, 0]], 
-  #["A", "A", [1, 0]], 
-  #["A", "A", [0, 1]], 
-  #["A", "A", [0, -1]], 
-  #["A", "A", [-1, 0]], 
-  #["A", "C", [1, 0]], 
-  #["A", "C", [0, 1]], 
-  #["A", "C", [0, -1]], 
-  #["A", "C", [-1, 0]], 
-  
-  #["C", "A", [-1, 0]], 
-  #["C", "B", [1, 0]], 
-  #["C", "A", [0, -1]], 
-  #["C", "C", [0, 1]], 
-  #["C", "C", [0, -1]], 
-  #["C", "A", [0, 1]], 
-  #["C", "C", [1, 0]], 
-  #["C", "B", [0, 1]],
-  #["C", "B", [0, -1]], 
-  #["C", "C", [-1, 0]], 
-  #["C", "A", [1, 0]], 
-  #["C", "B", [-1, 0]]}>
-  
-  #["B", "C", [-1, 0]], 
-  #["B", "B", [1, 0]], 
-  #["B", "C", [0, -1]], 
-  #["B", "B", [0, 1]], 
-  #["B", "B", [0, -1]], 
-  #["B", "C", [0, 1]], 
-  #["B", "B", [-1, 0]], 
-  #["B", "C", [1, 0]], 
   matrix = [
     ['D','D','D','D'],
     ['A','A','A','A'],
@@ -152,12 +114,46 @@ describe Estm do
       include_context "LCS matrix"
       before { subject.parse_example_matrix }
       it "should return true when checking for (L, L, RIGHT)" do
-        expect(subject.check('L', 'L', [1,0])).to be true
+        expect(subject.check('L', 'L', RIGHT)).to be true
       end
       
       it "should return false when checking for (S, L, LEFT)" do
         expect(subject.check('S', 'L', LEFT)).to be false
       end
+    end
+    context "an ABCD matrix" do
+      include_context "ABCD matrix"
+      before { subject.parse_example_matrix }
+      it "should return true when checking for (A, D, LEFT)" do
+        expect(subject.check('A', 'D', LEFT)). to be true
+      end
+      
+      it "should return false when checking for (A, D, RIGHT)" do
+        expect(subject.check('A', 'D', RIGHT)). to be false
+      end
+    end
+  end
+end
+
+# it seems like a really big problem
+# its not possible to test for a method that appears in an objects constructor
+# which means its possible to create versions of an object that are less than ideal
+# surely this is not a good idea??
+describe Wave do
+  describe "#init_coefficients" do
+    it "has a size of 3 x 3 and an input of weights" do
+      weights = {'L' => 5, 'S' => 10, 'C' => 3}
+      subject = described_class.new([3, 3], weights)
+      expect { subject.init_coefficients }
+      .to change(subject, :coefficients)
+      .to contain_exactly([['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C'],['L', 'S', 'C']])
+    end
+    it " has a size of 5 x 3 and an input of weights" do
+      weights = {'A' => 9, 'B' => 20, 'C' => 5, 'D' => 33}
+      subject = described_class.new([5, 3], weights)
+      expect { subject.init_coefficients }
+      .to change(subject, :coefficients)
+      .to contain_exactly([5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3])
     end
   end
 end

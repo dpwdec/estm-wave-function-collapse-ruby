@@ -17,6 +17,7 @@ class Estm
     @input_matrix = input_matrix
     @compatibilities = nil
     @weights = nil
+    @output_size = [10, 50]
   end
   
   # Uses the object's currently defined input matrix.
@@ -76,5 +77,21 @@ class Estm
   
   def compatibilities
     @compatibilities
+  end
+end
+
+class Wave
+  def initialize(size, weights)
+    @coefficients = []
+    @size = size
+    @weights = weights
+  end
+  
+  def init_coefficients
+    @coefficients = [[5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3], [5, 10, 3]]
+  end
+  
+  def coefficients
+    @coefficients
   end
 end
