@@ -15,8 +15,8 @@ class Estm
   
   def initialize(input_matrix)
     @input_matrix = input_matrix
-    @compatibilities = Object.new
-    @weights = Object.new
+    @compatibilities = nil
+    @weights = nil
   end
   
   # Uses the object's currently defined input matrix.
@@ -63,6 +63,11 @@ class Estm
     dirs << UP if y < height - 1
     
     return dirs
+  end
+  
+  # checks whether a specified compatibility exists
+  def check(tile_1, tile_2, direction)
+    @compatibilities.include?([tile_1, tile_2, direction])
   end
   
   def weights
