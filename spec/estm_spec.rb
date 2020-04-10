@@ -200,4 +200,15 @@ describe Wave do
       end
     end
   end
+  
+  describe "#shannon_entropy" do
+    let(:model_db) { instance_double(Estm, 
+      :weights => {'L' => 3, 'C' => 5, 'S' => 2 }, 
+      :output_size => [5, 3]) }
+      subject { described_class.new(model_db) }
+      before { subject.init_coefficients }
+      it "returns '1.029' for newly initialized LCS matrix" do
+        expect(subject.shannon_entropy(4, 1)).to be_within(0.01).of(1.029)
+      end
+  end
 end

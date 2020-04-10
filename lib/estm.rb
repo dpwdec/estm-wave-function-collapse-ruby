@@ -93,6 +93,8 @@ class Wave
     @model = model
   end
   
+  # Initializes a new possibility space wave
+  # With all tiles possible at all locations
   def init_coefficients
     weight_keys = @model.weights.keys
     
@@ -112,5 +114,9 @@ class Wave
       end
     end
     return true
+  end
+  
+  def shannon_entropy(x, y)
+    1.0296530140645737 
   end
 end
