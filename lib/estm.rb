@@ -75,23 +75,31 @@ class Estm
     @weights
   end
   
+  def output_size
+    @output_size
+  end
+  
   def compatibilities
     @compatibilities
   end
 end
 
 class Wave
-  def initialize(size, model)
+  def initialize(model)
     @coefficients = []
-    @size = size
     @model = model
   end
   
   def init_coefficients
-    g = @model.weights
-    @coefficients << [['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C']] 
-    @coefficients << [['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C']]
-    @coefficients << [['L', 'S', 'C'], ['L', 'S', 'C'], ['L', 'S', 'C']]
+    weight_keys = @model.weights.keys
+    
+    @model.output_size[0].times do
+      row = []
+      @model.output_size[1].times do
+        row << weight_keys
+      end
+      @coefficients << row
+    end
   end
   
   def coefficients
