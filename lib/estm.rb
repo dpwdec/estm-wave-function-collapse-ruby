@@ -85,6 +85,9 @@ class Estm
 end
 
 class Wave
+  
+  attr_accessor :coefficients
+  
   def initialize(model)
     @coefficients = []
     @model = model
@@ -100,9 +103,5 @@ class Wave
       end
       @coefficients << row
     end
-  end
-  
-  def coefficients
-    @coefficients
   end
 end
