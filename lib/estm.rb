@@ -104,4 +104,13 @@ class Wave
       @coefficients << row
     end
   end
+  
+  def is_fully_collapsed
+    @coefficients.each do |row|
+      row.each do |tile|
+        return false if tile.length > 1
+      end
+    end
+    return true
+  end
 end

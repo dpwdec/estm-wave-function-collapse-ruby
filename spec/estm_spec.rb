@@ -186,8 +186,17 @@ describe Wave do
         subject.coefficients = [[['G'], ['X']], [['G'], ['Q']]]
       end
       it "returns true" do
-        puts subject.coefficients
         expect(subject.is_fully_collapsed).to be true
+      end
+    end
+    
+    context "an output tile contains more than 1 possibility" do
+      subject { described_class.new(double("Model", :output_size => [0,0])) }
+      before do
+        subject.coefficients = [[['G'], ['X', 'N']], [['G'], ['Q']]]
+      end
+      it "returns false" do
+        expect(subject.is_fully_collapsed).to be false
       end
     end
   end
